@@ -11363,18 +11363,18 @@ begin
   t := DefaultTimeOut;
   f := [];
   for i := 0 to ACommands.Count - 1 do begin
-    s := ACommands[i].trim;
     if (s = '') or (s = '#') then
       continue;
 
     if copy(s,1,2) = '#!' then begin
-      s := LowerCase(s);
-      if copy(s, 3, length(OptTimeout)) = OptTimeout then begin
-        t := StrToIntDef(copy(s, 3+length(OptTimeout), MaxInt), DefaultTimeOut);
+      delete(s, 1, 2);
+      s := LowerCase(Trim(s));
+      if copy(s, 1, length(OptTimeout)) = OptTimeout then begin
+        t := StrToIntDef(copy(s, 1+length(OptTimeout), MaxInt), DefaultTimeOut);
       end;
 
-      if copy(s, 3, length(OptTimeoutWarn)) = OptTimeoutWarn then begin
-        if copy(s, 3+length(OptTimeout), MaxInt) = 'true' then
+      if copy(s, 1, length(OptTimeoutWarn)) = OptTimeoutWarn then begin
+        if copy(s, 1+length(OptTimeout), MaxInt) = 'true' then
           f := []
         else
           f := [cfNoTimeoutWarning];
